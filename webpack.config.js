@@ -1,22 +1,20 @@
-var HtmlWebpackPlugin = require("html-webpack-plugin");
-var path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require("path");
+
+const base = require("./webpack.config.base.js");
 
 module.exports = {
-  mode: "development",
-  entry: "./src/index.js",
-  output: {
-    filename: "index.[contenthash].js",
+  ...base,
+  devtool: "inline-source-map",
+  devServer: {
+    contentBase: "./dist",
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: "FFAA-天了噜",
-      template: "src/assets/index.html",
-    }),
-  ],
   module: {
     rules: [
+      ...base.module.rules,
       {
-        test: /\.css$/,
+        test: /\.css$/i,
         use: ["style-loader", "css-loader"],
       },
     ],
